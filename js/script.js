@@ -10,6 +10,7 @@ const SET_WRONG_INTERVAL = 2000; //2 seconds
 const STRONG_PROBABILITY = 0.2; //20%
 
 window.onload = function () {
+    setMusic();
     setGame();
 };
 
