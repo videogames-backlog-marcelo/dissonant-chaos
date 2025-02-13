@@ -1,37 +1,10 @@
 let newNote;
 let newWrongNote;
-let score = 0;
-let gameOver = false;
 
-const BOARD_SIZE = 49; // Board Size 7x7
 const NORMAL_NOTE_TIME = 3000; //3 seconds
 const SET_NORMAL_INTERVAL = 1000; //1 second
 const SET_WRONG_INTERVAL = 2000; //2 seconds
 const STRONG_PROBABILITY = 0.2; //20%
-
-window.onload = function () {
-    setMusic();
-    setGame();
-};
-
-function setGame() {
-    createBoard();
-    setInterval(setNote, SET_NORMAL_INTERVAL);
-    setInterval(setWrongNote, SET_WRONG_INTERVAL);
-}
-
-function createBoard() {
-    for (let i = 0; i < BOARD_SIZE; i++) {
-        let tile = document.createElement("div");
-        tile.id = i.toString();
-        document.getElementById("board").appendChild(tile);
-    }
-}
-
-function getRandomTile() {
-    let num = Math.floor(Math.random() * BOARD_SIZE);
-    return num.toString();
-}
 
 function createNote(content, type) {
     let note = document.createElement("button");
@@ -118,35 +91,4 @@ function styleNote(note, type) {
             note.style.backgroundColor = "lightgray";
             break;
     }
-}
-
-function handleScore(type) {
-    if (gameOver) return;
-    switch (type) {
-        case "normal":
-            updateScore(10);
-            break;
-        case "strong":
-            updateScore(30);
-            break;
-        case "wrong":
-            updateScore(-5);
-            break;
-        case "mystery":
-            
-            break;
-        default:
-            endGame("An error occurred");
-            break;
-    }
-}
-
-function updateScore(points) {
-    score += points;
-    document.getElementById("score").innerText = score.toString();
-}
-
-function endGame(message) {
-    gameOver = true;
-    document.getElementById("score").innerText = message;
 }

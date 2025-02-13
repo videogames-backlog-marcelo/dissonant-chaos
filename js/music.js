@@ -21,3 +21,7 @@ function toggleMusic() {
         backgroundMusic.pause();
     }
 }
+
+function stopMusic(){
+    backgroundMusic.pause();
+}
