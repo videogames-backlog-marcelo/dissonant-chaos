@@ -1,5 +1,8 @@
 const BOARD_SIZE = 49; // Board Size 7x7
 
+const SET_NORMAL_INTERVAL = 1500; //1.5 second
+const SET_WRONG_INTERVAL = 2000; //2 seconds
+
 window.onload = function () {
     setMusic();
     setGame();

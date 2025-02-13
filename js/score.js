@@ -1,6 +1,6 @@
 let score = 0;
 
-function handleScore(type) {
+function handleScore(type, sequenceSize = 0) {
     if (gameOver) return;
     switch (type) {
         case "normal":
@@ -12,8 +12,8 @@ function handleScore(type) {
         case "wrong":
             updateScore(-5);
             break;
-        case "mystery":
-            
+        case "sequence":
+            updateScore(sequenceSize * 10);
             break;
         default:
             endGame("An error occurred");

@@ -1,11 +1,6 @@
 let newNote;
 let newWrongNote;
 
-const NORMAL_NOTE_TIME = 3000; //3 seconds
-const SET_NORMAL_INTERVAL = 1000; //1 second
-const SET_WRONG_INTERVAL = 2000; //2 seconds
-const STRONG_PROBABILITY = 0.2; //20%
-
 function createNote(content, type) {
     let note = document.createElement("button");
     note.className = type;
@@ -17,16 +12,28 @@ function createNote(content, type) {
     return note;
 }
 
-function setNote() {
+function setNote(){
+    let newNoteType = Math.random();
+    if(newNoteType <= 0.1) {
+        clearAllNotes();
+        setSequenceNote();
+    }
+    else setNormalNote();
+}
+
+function setNormalNote() {
     if (gameOver) return;
 
     let isButtonClicked = false;
-    let isStrong = Math.random() < STRONG_PROBABILITY;
-    let timeRemaining = isStrong ? 5 : 3;
-    const buttonType = isStrong ? "strong" : "normal";
+    let probability = Math.random();
+    let type = setType(probability);
+    let timeRemaining = setTimeRemaining(type);
 
-    let note = createNote(timeRemaining, buttonType);
+    let note = createNote(timeRemaining, type);
     let num = getRandomTile();
+    if(newNote && newNote.id == num){
+        return;
+    }
     newNote = document.getElementById(num);
     newNote.appendChild(note);
 
@@ -44,38 +51,97 @@ function setNote() {
         }
     }, 1000);
 
-    if (isStrong) {
-        let clickCount = 0;
-        note.addEventListener("click", () => {
-            clickCount++;
-            if (clickCount === 3) {
-                handleScore("strong");
+    switch(type){
+        case "normal":
+            note.addEventListener("click", () => {
+                handleScore("normal");
                 note.remove();
                 isButtonClicked = true;
-            }
-        });
-    } else {
-        note.addEventListener("click", () => {
-            handleScore("normal");
-            note.remove();
-            isButtonClicked = true;
-        });
+            });
+            break;
+        case "strong":
+            let clickCount = 0;
+            note.addEventListener("click", () => {
+                clickCount++;
+                if (clickCount === 3) {
+                    handleScore("strong");
+                    note.remove();
+                    isButtonClicked = true;
+                }
+            });
+            break;
+        default:
+            note.addEventListener("click", () => {
+                handleScore("normal");
+                note.remove();
+                isButtonClicked = true;
+            });
+            break;
     }
+}
+
+function setTimeRemaining(type){
+    switch(type){
+        case "normal": return 3;
+        case "strong": return 5;
+        default: return 3;
+    }
+}
+
+function setType(probability){
+    if(probability > 0.1 && probability <= 0.3) return "strong";
+    return "normal";
 }
 
 function setWrongNote() {
     if (gameOver) return;
-    clearNote(newWrongNote);
-
+    if (newWrongNote) {
+        newWrongNote.innerHTML = "";
+    }
     let note = createNote("X", "wrong");
     const randomTile = getRandomTile();
     newWrongNote = document.getElementById(randomTile);
     newWrongNote.appendChild(note);
 }
 
-function clearNote(note) {
-    if (note) {
-        note.innerHTML = "";
+function clearAllNotes() {
+    document.querySelectorAll("#board button").forEach(button => button.remove());
+}
+
+function setSequenceNote() {
+    if (gameOver) return;
+
+    let sequenceSize = Math.floor(Math.random() * 4) + 3;
+    let sequenceTiles = [];
+    let correctOrder = [];
+    let currentIndex = 0;
+
+    for (let i = 0; i < sequenceSize; i++) {
+        let num = getRandomTile();
+        while (sequenceTiles.includes(num)) {
+            num = getRandomTile();
+        }
+        sequenceTiles.push(num);
+
+        let note = document.createElement("button");
+        note.className = "sequence";
+        styleNote(note, "sequence");
+        note.innerText = i + 1;
+        correctOrder.push(note);
+
+        let tile = document.getElementById(num);
+        tile.appendChild(note);
+
+        note.addEventListener("click", () => {
+            if (note === correctOrder[currentIndex]) {
+                currentIndex++;
+                note.remove();
+
+                if (currentIndex === sequenceSize) {
+                    handleScore("sequence", sequenceSize);
+                }
+            }
+        });
     }
 }
 
@@ -86,6 +152,9 @@ function styleNote(note, type) {
             break;
         case "wrong":
             note.style.backgroundColor = "red";
+            break;
+        case "sequence":
+            note.style.backgroundColor = "orange";
             break;
         default:
             note.style.backgroundColor = "lightgray";
