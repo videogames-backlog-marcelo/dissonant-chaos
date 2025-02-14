@@ -2,10 +2,12 @@ let level = 0;
 let numberOfNotes = 0;
 const MIN_NOTES = 3;
 let timeRemaining = 1;
+let timeDescreased = 0;
 let gameOver = false;
 
 function createLevel(){
     if (gameOver) return;
+    if(level%5 == 0 && timeDescreased <0.5) timeDescreased += 0.1; 
     timeRemaining = 1;
     numberOfNotes = Math.floor(Math.random() * (ROW_SIZE-1)) + MIN_NOTES;
     const createdNotes = numberOfNotes;
@@ -19,7 +21,7 @@ function createLevel(){
         let note = createNote(type);
         switch(type){
             case "normal":
-                timeRemaining++;
+                timeRemaining+= (1-timeDescreased);
                 note.addEventListener("click", () => {
                     handleScore(type);
                     note.remove();
@@ -46,7 +48,7 @@ function createLevel(){
                 });
                 break;
             case "strong":
-                timeRemaining += 2;
+                timeRemaining += (1-timeDescreased)*2;
                 let clickCount = 0;
                 note.addEventListener("click", () => {
                     clickCount++;
