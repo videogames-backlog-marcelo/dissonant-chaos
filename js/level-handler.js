@@ -7,7 +7,7 @@ let gameOver = false;
 
 function createLevel(){
     if (gameOver) return;
-    if(level%5 == 0 && timeDescreased <0.5) timeDescreased += 0.1; 
+    if(level%5 == 0 && timeDescreased <=0.5) timeDescreased += 0.1;
     timeRemaining = 1;
     numberOfNotes = Math.floor(Math.random() * (ROW_SIZE-1)) + MIN_NOTES;
     const createdNotes = numberOfNotes;
