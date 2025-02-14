@@ -7,13 +7,17 @@
     <link rel="stylesheet" href="styles.css">
     <script src="js/music.js" defer></script>
     <script src="js/set-game.js" defer></script>
-    <script src="js/game-states.js" defer></script>
     <script src="js/score.js" defer></script>
     <script src="js/buttons-handler.js" defer></script>
+    <script src="js/level-handler.js" defer></script>
 </head>
 <body>
     <h1>Beat by Beat</h1>
-    <h2 id="score">0</h2>
+    <section class="info">
+        <h2 id="level">Nivel: 1</h2>
+        <h2 id="score">0</h2>
+        <h2 id="timer">Tiempo: 0</h2>
+    </section>
     <div id="board"></div>
     <audio id="block-music" loop>
         <source src="music/block.mp3">

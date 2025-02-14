@@ -4,6 +4,18 @@ body {
     background-image: url("images/block.jpg");
     background-position: center top -50px;
     background-size: cover;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.info{
+    width: 490px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 1rem;
 }
 
 #board {
@@ -20,6 +32,8 @@ body {
     border-radius: 25px;
 
     padding: 1rem;
+
+    transition: background-color 0.5s ease;
 }
 
 
