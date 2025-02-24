@@ -1,0 +1,85 @@
+#board>div>button {
+    width: 60%;
+    height: 60%;
+    padding: 0;
+    margin: 0;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    box-shadow: inset -6px -6px 8px rgba(0, 0, 0, 0.6), 
+                inset 4px 4px 6px rgba(255, 255, 255, 0.3),
+                2px 2px 5px rgba(0, 0, 0, 0.5);
+    transition: transform 0.1s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bolder;
+}
+
+#board>div>button::after {
+    content: "";
+    position:absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    transform: scale(0);
+    opacity: 1;
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+}
+
+#board>div>button:focus:after {
+    transform: scale(3);
+    opacity: 0;
+}
+
+#board>div>button:active {
+    transform: scale(0.9);
+}
+
+button.normal {
+    background: radial-gradient(circle at top left, rgba(200, 255, 200, 0.7) 10%, 
+                                                    rgba(0, 200, 0, 0.8) 40%, 
+                                                    rgba(0, 100, 0, 1) 90%);
+}
+
+button.strong {
+    background: radial-gradient(circle at top left, rgba(200, 200, 255, 0.7) 10%, 
+                                                    rgba(0, 0, 200, 0.8) 40%, 
+                                                    rgba(0, 0, 100, 1) 90%);
+}
+
+
+button.wrong {
+    background: radial-gradient(circle at top left, rgba(255, 200, 200, 0.7) 10%, 
+                                                    rgba(200, 0, 0, 0.8) 40%, 
+                                                    rgba(100, 0, 0, 1) 90%);
+}
+
+
+/*Other I will probably use*/
+button.yellow {
+    background: radial-gradient(circle at top left, rgba(255, 255, 200, 0.7) 10%, 
+                                                    rgba(200, 200, 0, 0.8) 40%, 
+                                                    rgba(100, 100, 0, 1) 90%);
+}
+
+button.purple {
+    background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.7) 10%, 
+                                                    rgba(128, 0, 128, 0.8) 40%, 
+                                                    rgba(50, 0, 50, 1) 90%);
+}
+
+button.orange {
+    background: radial-gradient(circle at top left, rgba(255, 220, 180, 0.7) 10%, 
+                                                    rgba(255, 140, 0, 0.8) 40%, 
+                                                    rgba(160, 70, 0, 1) 90%);
+}
+
+button.cyan {
+    background: radial-gradient(circle at top left, rgba(200, 255, 255, 0.7) 10%, 
+                                                    rgba(0, 180, 255, 0.8) 40%, 
+                                                    rgba(0, 100, 160, 1) 90%);
+}

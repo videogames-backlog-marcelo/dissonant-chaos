@@ -22,6 +22,7 @@ function createLevel(){
         switch(type){
             case "normal":
                 timeRemaining+= (1-timeDescreased);
+                note.classList.add("normal");
                 note.addEventListener("click", () => {
                     handleScore(type);
                     note.remove();
@@ -38,6 +39,7 @@ function createLevel(){
             case "wrong":
                 --numberOfNotes;
                 let originalColor = document.getElementById("board").style.background;
+                note.classList.add("wrong");
                 note.addEventListener("click", () => {
                     document.getElementById("board").style.backgroundColor = "red";
                     setTimeout(() => {
@@ -50,6 +52,7 @@ function createLevel(){
             case "strong":
                 timeRemaining += (1-timeDescreased)*2;
                 let clickCount = 0;
+                note.classList.add("strong");
                 note.addEventListener("click", () => {
                     clickCount++;
                     if (clickCount === 3) {
@@ -104,23 +107,8 @@ function typeSelector() {
 function createNote(type) {
     let note = document.createElement("button");
     note.className = type;
-    styleNote(note, type);
+    if(type == "wrong") note.innerText = "X";
     return note;
-}
-
-function styleNote(note, type) {
-    switch (type) {
-        case "strong":
-            note.style.backgroundColor = "lightblue";
-            break;
-        case "wrong":
-            note.style.backgroundColor = "red";
-            note.innerText = "X";
-            break;
-        default:
-            note.style.backgroundColor = "lightgray";
-            break;
-    }
 }
 
 function clearAllNotes() {
